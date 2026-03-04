@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="BlazorWeatherApp.Tests/BlazorWeatherApp.Tests.csproj" />
-  <Project Path="BlazorWeatherApp/BlazorWeatherApp.csproj" />
-</Solution>
