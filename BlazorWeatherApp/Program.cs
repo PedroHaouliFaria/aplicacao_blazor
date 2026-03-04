@@ -3,6 +3,10 @@ using BlazorWeatherApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure port for Render.com (uses PORT env var)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://+:{port}");
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
