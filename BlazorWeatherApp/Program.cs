@@ -30,7 +30,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseAntiforgery();
 
-app.MapStaticAssets();
+app.UseStaticFiles();
 
 // Map API controllers
 app.MapControllers();
