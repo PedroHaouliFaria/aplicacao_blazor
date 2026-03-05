@@ -8,6 +8,7 @@ WORKDIR /src
 
 # Copy solution and project files first (for layer caching)
 COPY BlazorWeatherApp.sln .
+COPY global.json .
 COPY BlazorWeatherApp/BlazorWeatherApp.csproj BlazorWeatherApp/
 COPY BlazorWeatherApp.Tests/BlazorWeatherApp.Tests.csproj BlazorWeatherApp.Tests/
 
@@ -27,18 +28,21 @@ RUN dotnet publish BlazorWeatherApp/ -c Release -o /app/publish --no-restore
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
+# Install curl for health check
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 # Copy published output
 COPY --from=build /app/publish .
 
 # Set environment variables
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-# Expose port
+# Expose port (Render assigns dynamically via PORT env var)
 EXPOSE 8080
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8080}/health || exit 1
 
 # Run the application
 ENTRYPOINT ["dotnet", "BlazorWeatherApp.dll"]

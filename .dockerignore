@@ -1,24 +1,7 @@
-# Build artifacts
 **/bin/
 **/obj/
-
-# IDE
 .vs/
-*.user
-*.suo
-
-# Git
 .git/
-.gitignore
-
-# Docker
-**/Dockerfile*
-**/.dockerignore
-
-# Documentation
-docs/
 *.md
-
-# OS
 .DS_Store
-Thumbs.db
+TestResults/
