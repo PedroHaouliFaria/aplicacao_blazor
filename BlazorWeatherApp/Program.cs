@@ -25,12 +25,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseExceptionHandler("/Error");
 }
 
-app.UseAntiforgery();
-
 app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAntiforgery();
 
 // Map API controllers
 app.MapControllers();
